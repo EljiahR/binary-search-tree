@@ -85,6 +85,19 @@ function createTree(array){
             }
             return "Not found"
             
+        },
+        levelOrder(func){
+        
+            let queue = [this.root];
+            let dataArr = [];
+            
+            while(queue.length !== 0){
+                let node = queue.shift();
+                dataArr.push(func(node.data));
+                if(node.left){queue.push(node.left)}
+                if(node.right){queue.push(node.right)};
+            }
+            return dataArr;
         }
     }
 }
@@ -123,3 +136,4 @@ tree.insert(83)
 tree.delete(8);
 prettyPrint(tree.root);
 console.log(tree.find(9));
+console.log(tree.levelOrder((x)=>x))
