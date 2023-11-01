@@ -33,14 +33,43 @@ function createTree(array){
         delete(value){
             let previousNode = null;
             let currentNode = this.root;
-            while(1 == null){
-                if(value > currentNode.data){
+            let direction = "";
+            while(currentNode !== null){
+                if(currentNode.data === value){
+                    if(!currentNode.left && !currentNode.right){
+                        previousNode[direction] = null;
+                        
+                    } else if(!currentNode.left){
+                        previousNode[direction] = currentNode.right;
+                    } else if(!currentNode.right){
+                        previousNode[direction] = currentNode.left;
+                    } else{
+                        let rootParent = currentNode
+                        let newRoot = currentNode.right;
+                        let left = currentNode.left;
+                        let right = currentNode.right
+                        while(newRoot.left !== null){
+                            [rootParent, newRoot] = [newRoot, newRoot.left]
+                        }
+                        if(previousNode){ 
+                            previousNode[direction] = newRoot;
+                        } else {
+                            this.root = newRoot;
+                        }
+                        newRoot.left = left;
+                        newRoot.right = right;
+                        rootParent.left = null;
+                    }
+                    return;
+                }else if(value > currentNode.data){
                     [currentNode,previousNode] = [currentNode.right, previousNode=currentNode];
+                    direction = "right";
                 }else{
                     [currentNode,previousNode] = [currentNode.left, previousNode=currentNode];
+                    direction = "left";
                 }
             }
-
+            console.log("Node not found");
             
         }
     }
@@ -77,4 +106,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.insert(83)
+tree.delete(8);
 prettyPrint(tree.root);
