@@ -71,6 +71,20 @@ function createTree(array){
             }
             console.log("Node not found");
             
+        },
+        find(value){
+            let currentNode = this.root;
+            while(currentNode){
+                if(currentNode.data === value){
+                    return currentNode
+                }else if(value > currentNode.data){
+                    currentNode = currentNode.right
+                }else{
+                    currentNode = currentNode.left
+                }
+            }
+            return "Not found"
+            
         }
     }
 }
@@ -108,3 +122,4 @@ const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.insert(83)
 tree.delete(8);
 prettyPrint(tree.root);
+console.log(tree.find(9));
