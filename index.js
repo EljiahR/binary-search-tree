@@ -98,15 +98,18 @@ function createTree(array){
             return dataArr;
         },
         inOrder(func = (x) => x, root = this.root){
-        
+            
             if(!root){
-                return;
+                return null;
             }else{
             
-                this.inOrder(func, root.left);
-                //console.log(func(root.data));
-                this.inOrder(func,root.right);
+                let leftArr = this.inOrder(func, root.left);
+                let arr = [func(root.data)];
+                let rightArr = this.inOrder(func,root.right);
                 
+                if(leftArr){arr = leftArr.concat(arr)}
+                if(rightArr){arr = arr.concat(rightArr)}
+                return arr;
             }
         },
         preOrder(func){
@@ -153,6 +156,6 @@ const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.insert(83)
 tree.delete(8);
 prettyPrint(tree.root);
-console.log(tree.find(9));
-console.log(tree.levelOrder())
-//console.log(tree.inOrder());
+//console.log(tree.find(9));
+//console.log(tree.levelOrder())
+console.log(tree.inOrder());
