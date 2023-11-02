@@ -112,11 +112,39 @@ function createTree(array){
                 return arr;
             }
         },
-        preOrder(func){
-
+        preOrder(func = (x) => x, root = this.root){
+            
+            if(!root){
+                return null;
+            }else{
+                
+                let arr = [func(root.data)];
+                let leftArr = this.preOrder(func, root.left); 
+                let rightArr = this.preOrder(func,root.right);
+                
+                if(leftArr){arr = arr.concat(leftArr)}
+                if(rightArr){arr = arr.concat(rightArr)}
+                return arr;
+            }
         },
-        postOrder(func){
-
+        postOrder(func = (x) => x, root = this.root){
+            
+            if(!root){
+                return null;
+            }else{
+                
+                
+                let leftArr = this.postOrder(func, root.left); 
+                let rightArr = this.postOrder(func,root.right);
+                let arr = [func(root.data)];
+                
+                if(leftArr && rightArr){
+                    arr = leftArr.concat(rightArr, arr)
+                }else if(leftArr){
+                    arr = leftArr.concat(arr)
+                }else if(rightArr){arr = rightArr.concat(arr)}
+                return arr;
+            }
         }
     }
 }
@@ -158,4 +186,6 @@ tree.delete(8);
 prettyPrint(tree.root);
 //console.log(tree.find(9));
 //console.log(tree.levelOrder())
-console.log(tree.inOrder());
+//console.log(tree.inOrder());
+//console.log(tree.preOrder());
+console.log(tree.postOrder());
