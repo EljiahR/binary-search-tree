@@ -184,6 +184,10 @@ function createTree(array){
                 return true;
             }
             return false;
+        },
+        rebalance(){
+            let arr = this.inOrder();
+            this.root = buildTree(arr, 0, arr.length - 1);
         }
     }
 }
@@ -221,7 +225,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
  
 const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.insert(83)
-//tree.delete(8);
+tree.delete(8);
 prettyPrint(tree.root);
 //console.log(tree.find(9));
 //console.log(tree.levelOrder())
@@ -231,3 +235,6 @@ prettyPrint(tree.root);
 //console.log(tree.height(tree.find(9)));
 //console.log(tree.depth(tree.find(9)));
 console.log(tree.isBalanced());
+tree.rebalance();
+console.log(tree.isBalanced());
+prettyPrint(tree.root)
