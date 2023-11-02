@@ -145,6 +145,18 @@ function createTree(array){
                 }else if(rightArr){arr = rightArr.concat(arr)}
                 return arr;
             }
+        },
+        height(node, x){
+            if(!node) return -1;
+
+            let leftHeight = this.height(node.left, x);
+            let rightHeight = this.height(node.right, x);
+
+            let currentHeight = Math.max(leftHeight, rightHeight) + 1;
+            
+            if(node)
+
+            return currentHeight;
         }
     }
 }
@@ -188,4 +200,5 @@ prettyPrint(tree.root);
 //console.log(tree.levelOrder())
 //console.log(tree.inOrder());
 //console.log(tree.preOrder());
-console.log(tree.postOrder());
+//console.log(tree.postOrder());
+console.log(tree.height(tree.find(9)));
