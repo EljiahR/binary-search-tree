@@ -157,6 +157,22 @@ function createTree(array){
             if(node)
 
             return currentHeight;
+        },
+        depth(node){
+            let currentNode = this.root;
+            let depth = 0;
+            while(currentNode){
+                if(currentNode.data === node.data){
+                    return depth
+                }else if(node.data > currentNode.data){
+                    currentNode = currentNode.right
+                    depth++
+                }else{
+                    currentNode = currentNode.left
+                    depth++
+                }
+            }
+            return "Not found" 
         }
     }
 }
@@ -201,4 +217,5 @@ prettyPrint(tree.root);
 //console.log(tree.inOrder());
 //console.log(tree.preOrder());
 //console.log(tree.postOrder());
-console.log(tree.height(tree.find(9)));
+//console.log(tree.height(tree.find(9)));
+console.log(tree.depth(tree.find(9)));
