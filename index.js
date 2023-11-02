@@ -223,18 +223,53 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
 };
  
+/*
 const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.insert(83)
 tree.delete(8);
 prettyPrint(tree.root);
-//console.log(tree.find(9));
-//console.log(tree.levelOrder())
-//console.log(tree.inOrder());
-//console.log(tree.preOrder());
-//console.log(tree.postOrder());
-//console.log(tree.height(tree.find(9)));
-//console.log(tree.depth(tree.find(9)));
+console.log(tree.find(9));
+console.log(tree.levelOrder())
+console.log(tree.inOrder());
+console.log(tree.preOrder());
+console.log(tree.postOrder());
+console.log(tree.height(tree.find(9)));
+console.log(tree.depth(tree.find(9)));
 console.log(tree.isBalanced());
 tree.rebalance();
 console.log(tree.isBalanced());
 prettyPrint(tree.root)
+*/
+function randomNumbers(max, min){
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+function randomTree(){
+    const arr = []
+    for(let i = 0; i < 10; i++){
+        arr.push(randomNumbers(99,0));
+    }
+    const tree = createTree(arr);
+    console.log("Balanced?: " + tree.isBalanced());
+    prettyPrint(tree.root);
+    console.log("Level Order: " + tree.levelOrder());
+    console.log("Pre Order:" + tree.preOrder());
+    console.log("Post Order:" + tree.postOrder());
+    console.log("In Order:" + tree.inOrder());
+    
+    for(let i = 0; i < 4; i++){
+        tree.insert(randomNumbers(999,101));
+    }
+
+    console.log("Balanced?: " + tree.isBalanced());
+    prettyPrint(tree.root);
+    tree.rebalance();
+    console.log("Balanced?: " + tree.isBalanced());
+    prettyPrint(tree.root);
+    console.log("Level Order: " + tree.levelOrder());
+    console.log("Pre Order:" + tree.preOrder());
+    console.log("Post Order:" + tree.postOrder());
+    console.log("In Order:" + tree.inOrder());
+
+}
+randomTree();
