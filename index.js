@@ -6,13 +6,11 @@ function createNode(data, left = null, right = null){
     }
 }
 function createTree(array){
-    let sortedArray = array.sort((a,b)=>a-b);
-    let filteredArray = sortedArray.filter((item, index) =>{
-        return sortedArray.indexOf(item) === index;
-    })
+    
+    let sortedArray = sortArray(array)
 
     return {
-        root: buildTree(filteredArray,0,filteredArray.length - 1),
+        root: buildTree(sortedArray,0,sortedArray.length - 1),
         insert(value){
             let previousNode = null;
             let currentNode = this.root;
@@ -69,7 +67,7 @@ function createTree(array){
                     direction = "left";
                 }
             }
-            console.log("Node not found");
+            return "Node not found";
             
         },
         find(value){
@@ -86,7 +84,7 @@ function createTree(array){
             return "Not found"
             
         },
-        levelOrder(func){
+        levelOrder(func = (x) => x){
         
             let queue = [this.root];
             let dataArr = [];
@@ -98,16 +96,38 @@ function createTree(array){
                 if(node.right){queue.push(node.right)};
             }
             return dataArr;
+        },
+        inOrder(func = (x) => x, root = this.root){
+        
+            if(!root){
+                return;
+            }else{
+            
+                this.inOrder(func, root.left);
+                //console.log(func(root.data));
+                this.inOrder(func,root.right);
+                
+            }
+        },
+        preOrder(func){
+
+        },
+        postOrder(func){
+
         }
     }
 }
 
+function sortArray(array){
+    return array.sort((a,b)=>a-b).filter((item,index, thisArray)=> thisArray.indexOf(item) === index);
+}
+
 function buildTree(array, start, end){
+
     if(start > end) return null;
-    
 
     const mid = Math.round((start + end) / 2);
-    const treeRoot = createNode(array[mid]);
+    const treeRoot = createNode(array[mid]); 
 
     treeRoot.left = buildTree(array, start, mid - 1);
     treeRoot.right = buildTree(array, mid + 1, end);
@@ -129,11 +149,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     }
 };
  
-
-
 const tree = createTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree.insert(83)
 tree.delete(8);
 prettyPrint(tree.root);
 console.log(tree.find(9));
-console.log(tree.levelOrder((x)=>x))
+console.log(tree.levelOrder())
+//console.log(tree.inOrder());
